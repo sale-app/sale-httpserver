@@ -1,0 +1,57 @@
+<?xml version="1.0" ?>
+<project name="sale" default="all">
+
+    <property name="lib.dir" value="lib"/>
+    <property name="src.dir" value="src"/>
+
+    <target name="clean">
+        <delete dir="build"/>
+        <delete dir="deploy"/>
+    </target>
+
+    <target name="init" depends="clean">
+        <mkdir dir="build"/>
+        <mkdir dir="deploy"/>
+        <mkdir dir="deploy/sale"/>
+        <mkdir dir="build/classes"/>
+    </target>
+
+    <path id="classpath">
+        <fileset dir="${lib.dir}" includes="**/*.jar"/>
+    </path>
+
+    <target name="compile" depends="init">
+        <javac debug="on" srcdir="${src.dir}" destdir="build/classes">
+            <classpath>
+                <path refid="classpath"/>
+            </classpath>
+        </javac>
+
+    </target>
+
+    <target name="deploy" depends="compile">
+        <copy todir="deploy/sale/">
+            <fileset dir="resources/html"/>
+        </copy>
+        <copy todir="deploy/sale/WEB-INF">
+            <fileset dir="resources/WEB-INF"/>
+        </copy>
+        <copy todir="deploy/sale/WEB-INF/classes">
+            <fileset dir="build/classes"/>
+        </copy>
+        <copy todir="deploy/sale/WEB-INF/classes">
+            <fileset dir="config"/>
+        </copy>
+        <copy todir="deploy/sale/WEB-INF/lib">
+            <fileset dir="lib"/>
+        </copy>
+    </target>
+
+    <target name="war" depends="deploy">
+    	<war destfile="deploy/sale.war" basedir="deploy/sale"/>
+    </target>
+
+    <target name="all" depends="war">
+    </target>
+
+</project>
