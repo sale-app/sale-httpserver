@@ -5,6 +5,8 @@ import com.sale.context.ContextManager;
 import com.sale.db.DBManager;
 import com.sale.db.DBManagerFactory;
 import com.sale.db.objects.DBCity;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,15 +46,19 @@ public class SalesMainServlet extends HttpServlet
 
         DBManager dbManager = DBManagerFactory.getDBManager();
         List<DBCity> cities = dbManager.getAllCities();
-        OutputStream out = response.getOutputStream();
-        out.write("<html><head><title>Welcome to Sale</title></head>".getBytes());
-        out.write("<body>".getBytes());
+        JSONObject object = new JSONObject();
+        JSONArray array = new JSONArray();
         for(int i=0;i<cities.size();i++)
         {
-            out.write((cities.get(i).getCityId() + " - " + cities.get(i).getCityName() + "<br>").getBytes());
+            DBCity city = cities.get(i);
+            JSONObject obj = new JSONObject();
+            obj.put("cityId", city.getCityId());
+            obj.put("cityName", city.getCityName());
+            array.add(obj);
         }
-        out.write("</body>".getBytes());
-        out.write("</html>".getBytes());
+        object.put("items", array);
+        response.getOutputStream().write(object.toJSONString().getBytes());
+
 
     }
 
