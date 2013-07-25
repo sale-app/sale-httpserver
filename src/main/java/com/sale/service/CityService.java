@@ -1,4 +1,4 @@
-package com.sale.servlet;
+package com.sale.service;
 
 
 import com.sale.db.DBManager;
