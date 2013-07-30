@@ -9,5 +9,7 @@ package com.sale.db.util;
  */
 public class QueryUtil
 {
-    public static final String GET_ALL_CITIES = "select * from City";
+    public static final String GET_ALL_CITIES = "select * from CITY";
+    public static final String GET_AREAS_IN_CITY = "select * from AREA where area_id in (select area_id from CITY_AREA_MAPPING where city_id=?)";
+    public static final String GET_MALLS_IN_CITY_AREA = "select * from MALL where mall_id in (select mall_id from MALL_LOCATION_MAPPING where city_id=? and area_id=?)";
 }

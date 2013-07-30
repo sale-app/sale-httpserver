@@ -1,6 +1,8 @@
 package com.sale.db;
 
+import com.sale.db.objects.DBArea;
 import com.sale.db.objects.DBCity;
+import com.sale.db.objects.DBMall;
 
 import java.util.List;
 
@@ -14,4 +16,8 @@ import java.util.List;
 public interface DBManager
 {
     public List<DBCity> getAllCities();
+
+    public List<DBArea> getAreaInCity(int cityId);
+
+    public List<DBMall> getMallsInCityArea(int cityId, int areaId);
 }
