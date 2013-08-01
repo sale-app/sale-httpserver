@@ -3,12 +3,11 @@ from fabric.contrib import *
 from fabric.operations import run, put
 
 def write_version():
-    local("mkdir -p deploy/")
-    local("mkdir -p deploy/sale/")
-    local("rm -f deploy/sale/info")
-    local("whoami >> deploy/sale/info")
-    local("date >> deploy/sale/info")
-    local("git branch -v | grep ^* >> deploy/sale/info")
+    local("rm -rf target/sale")
+    local("cp -r target/sale-httpserver-1.0 target/sale")
+    local("whoami >> target/sale/info")
+    local("date >> target/sale/info")
+    local("git branch -v | grep ^* >> target/sale/info")
     env.build_info = "hello"
 
 def aws():
@@ -20,7 +19,7 @@ def deploy_app():
     """Deploys the application using rsync"""
     require("app_directory")
     write_version()
-    project.rsync_project(local_dir="deploy/sale", remote_dir=env.app_directory, exclude=["*~", ".gitignore"])
+    project.rsync_project(local_dir="target/sale", remote_dir=env.app_directory, exclude=["*~", ".gitignore"])
     #filename = "deploy/config/%s-server.properties" % env.role
     #remotefile = "%s/deploy/config/server.properties" % env.app_directory
     #project.put(local_path=filename, remote_path=remotefile)
@@ -51,7 +50,7 @@ def status():
      run("supervisorctl status")
 
 def build():
-     local("ant")
+     local("mvn install")
 
 def deploy():
      build()
