@@ -6,6 +6,8 @@ import com.sale.db.DBManagerFactory;
 import com.sale.db.objects.DBCity;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -21,14 +23,17 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 @Path("/citylist")
-public class CityService
+public class CityService extends AbstractService
 {
+    private static Logger logger = LoggerFactory.getLogger(SaleService.class.getCanonicalName());
+
     @GET
     @Produces("application/json")
     public String getAllCities() {
 
-        DBManager dbManager = DBManagerFactory.getDBManager();
-        List<DBCity> cities = dbManager.getAllCities();
+        logger.debug("Fetching all cities");
+
+        List<DBCity> cities = getDbManager().getAllCities();
         JSONObject object = new JSONObject();
         JSONArray array = new JSONArray();
         for(int i=0;i<cities.size();i++)

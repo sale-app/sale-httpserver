@@ -6,6 +6,8 @@ import com.sale.db.objects.DBArea;
 import com.sale.db.objects.DBCity;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.*;
 import java.util.List;
@@ -18,15 +20,16 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 @Path("/arealist")
-public class AreaService
+public class AreaService extends AbstractService
 {
+    private static Logger logger = LoggerFactory.getLogger(SaleService.class.getCanonicalName());
+
     @GET
     @Produces("application/json")
     public String getAreaListInCity(@QueryParam("cityId") int cityId) {
 
-        System.out.println("cityId = " + cityId);
-        DBManager dbManager = DBManagerFactory.getDBManager();
-        List<DBArea> areaList = dbManager.getAreaInCity(cityId);
+        logger.info("Fetching areas in cityId [" + cityId + "]");
+        List<DBArea> areaList = getDbManager().getAreaInCity(cityId);
         JSONObject object = new JSONObject();
         JSONArray array = new JSONArray();
         for(int i=0;i<areaList.size();i++)

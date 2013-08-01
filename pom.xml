@@ -7,6 +7,7 @@
     <groupId>sale-httpserver</groupId>
     <artifactId>sale-httpserver</artifactId>
     <version>1.0</version>
+    <packaging>war</packaging>
 
     <properties>
         <slf4jVersion>1.7.5</slf4jVersion>
@@ -61,6 +62,7 @@
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate</artifactId>
             <version>${hibernate.version}</version>
+	    <type>pom</type>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
