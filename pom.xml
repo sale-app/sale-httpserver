@@ -12,7 +12,9 @@
     <properties>
         <slf4jVersion>1.7.5</slf4jVersion>
         <springVersion>3.2.3.RELEASE</springVersion>
-        <jersey.version>2.0</jersey.version>
+        <!--jersey.version>2.0</jersey.version-->
+        <jersey-bundle.version>1.14</jersey-bundle.version>
+        <asm.version>3.3.1</asm.version>
         <json-simple.version>1.1</json-simple.version>
         <servlet-api.version>2.5</servlet-api.version>
         <hibernate-core.version>4.2.3.Final</hibernate-core.version>
@@ -20,6 +22,8 @@
         <hibernate-ehcache.version>4.2.3.Final</hibernate-ehcache.version>
         <mysql-connector-java.version>5.1.25</mysql-connector-java.version>
         <hibernate.version>3.5.4-Final</hibernate.version>
+        <hibernate.version>3.5.4-Final</hibernate.version>
+        <c3p0.version>0.9.1.2</c3p0.version>
     </properties>
 
     <dependencies>
@@ -43,11 +47,21 @@
             <artifactId>spring-jdbc</artifactId>
             <version>${springVersion}</version>
         </dependency>
-        <dependency>
+        <!--dependency>
             <groupId>org.glassfish.jersey.core</groupId>
             <artifactId>jersey-client</artifactId>
             <version>${jersey.version}</version>
-        </dependency>
+        </dependency-->
+	<dependency>
+	    <groupId>asm</groupId>
+	    <artifactId>asm</artifactId>
+	    <version>${asm.version}</version>
+	</dependency>	
+	<dependency>
+	    <groupId>com.sun.jersey</groupId>
+	    <artifactId>jersey-bundle</artifactId>
+	    <version>${jersey-bundle.version}</version>
+	</dependency>
         <dependency>
             <groupId>com.googlecode.json-simple</groupId>
             <artifactId>json-simple</artifactId>
@@ -84,5 +98,10 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>${mysql-connector-java.version}</version>
         </dependency>
+	<dependency>
+	    <groupId>c3p0</groupId>
+	    <artifactId>c3p0</artifactId>
+	    <version>${c3p0.version}</version>
+	</dependency>
     </dependencies>
 </project>
