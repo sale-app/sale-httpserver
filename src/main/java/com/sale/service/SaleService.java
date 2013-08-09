@@ -8,9 +8,6 @@ package com.sale.service;
  * To change this template use File | Settings | File Templates.
  */
 
-import com.sale.db.DBManager;
-import com.sale.db.DBManagerFactory;
-import com.sale.db.objects.DBArea;
 import com.sale.db.objects.DBMall;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -30,24 +27,8 @@ public class SaleService extends AbstractService
 
     @GET
     @Produces("application/json")
-    public String getMallsInCityArea(@QueryParam("cityId") int cityId, @QueryParam("areaId") int areaId) {
+    public String getLatestSale(@QueryParam("cityId") int cityId, @QueryParam("areaId") int areaId) {
 
-        logger.debug("Fetching malls in cityId [ " + cityId + "], areaId [" + areaId + "]");
-
-        List<DBMall> mallList = getDbManager().getMallsInCityArea(cityId, areaId);
-        JSONObject object = new JSONObject();
-        JSONArray array = new JSONArray();
-        for(int i=0;i<mallList.size();i++)
-        {
-            DBMall mall = mallList.get(i);
-            JSONObject obj = new JSONObject();
-            obj.put("mallId", mall.getMallId());
-            obj.put("mallName", mall.getMallName());
-            obj.put("latitude", mall.getLatitude());
-            obj.put("longitude", mall.getLongitude());
-            array.add(obj);
-        }
-        object.put("items", array);
-        return object.toJSONString();
+        return null;
     }
 }

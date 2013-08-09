@@ -28,7 +28,7 @@ public class AreaService extends AbstractService
     @Produces("application/json")
     public String getAreaListInCity(@QueryParam("cityId") int cityId) {
 
-        logger.info("Fetching areas in cityId [" + cityId + "]");
+        logger.debug("Fetching areas in cityId [" + cityId + "]");
         List<DBArea> areaList = getDbManager().getAreaInCity(cityId);
         JSONObject object = new JSONObject();
         JSONArray array = new JSONArray();
