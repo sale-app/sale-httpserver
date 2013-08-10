@@ -1,9 +1,6 @@
-package com.sale.service;
+package com.sale.controller;
 
-import com.sale.db.DBManager;
-import com.sale.db.DBManagerFactory;
-import com.sale.db.objects.DBArea;
-import com.sale.db.objects.DBCity;
+import com.sale.vo.AreaVO;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
@@ -20,26 +17,34 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 @Path("/arealist")
-public class AreaService extends AbstractService
+public class AreaController extends AbstractController
 {
-    private static Logger logger = LoggerFactory.getLogger(SaleService.class.getCanonicalName());
+    private static Logger logger = LoggerFactory.getLogger(AreaController.class.getCanonicalName());
 
     @GET
     @Produces("application/json")
     public String getAreaListInCity(@QueryParam("cityId") int cityId) {
 
         logger.debug("Fetching areas in cityId [" + cityId + "]");
-        List<DBArea> areaList = getDbManager().getAreaInCity(cityId);
+        List<AreaVO> areaList = getMainService().getAreaInCity(cityId);
         JSONObject object = new JSONObject();
         JSONArray array = new JSONArray();
+        if(areaList.size() > 0)
+        {
+            JSONObject obj = new JSONObject();
+            obj.put("areaId", -1);
+            obj.put("areaName", "All");
+            array.add(obj);
+        }
         for(int i=0;i<areaList.size();i++)
         {
-            DBArea area = areaList.get(i);
+            AreaVO area = areaList.get(i);
             JSONObject obj = new JSONObject();
             obj.put("areaId", area.getAreaId());
             obj.put("areaName", area.getAreaName());
             array.add(obj);
         }
+
         object.put("items", array);
         return object.toJSONString();
     }
