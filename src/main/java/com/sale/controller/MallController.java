@@ -33,6 +33,14 @@ public class MallController extends AbstractController
         List<MallVO> mallList = getMainService().getMallsInCityArea(cityId, areaId);
         JSONObject object = new JSONObject();
         JSONArray array = new JSONArray();
+        if(mallList.size() > 0)
+        {
+            JSONObject obj = new JSONObject();
+            obj.put("mallId", -1);
+            obj.put("mallName", "All Stores");
+            array.add(obj);
+        }
+
         for(int i=0;i<mallList.size();i++)
         {
             MallVO mall = mallList.get(i);
