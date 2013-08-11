@@ -1,6 +1,4 @@
-package com.sale.db.model;
-
-import org.hibernate.annotations.ForeignKey;
+package com.sale.db.dao.object;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -11,20 +9,18 @@ import java.io.Serializable;
  * Time: 11:04 PM
  */
 @Entity
-@Table(name = "category", uniqueConstraints = {
-        @UniqueConstraint(columnNames = "CATEGORY_NAME")
-})
-public class Category implements Serializable {
+@Table(name = "CATEGORY")
+public class DBCategory implements Serializable {
     private static final long serialVersionUID = -8452393188431340095L;
 
     private Integer categoryId_;
     private String categoryName_;
-    private Category parentCategory_;
+    private DBCategory parentCategory_;
 
-    public Category() {
+    public DBCategory() {
     }
 
-    public Category(Integer categoryId, String categoryName, Category parentCategory) {
+    public DBCategory(Integer categoryId, String categoryName, DBCategory parentCategory) {
         categoryId_ = categoryId;
         categoryName_ = categoryName;
         parentCategory_ = parentCategory;
@@ -51,13 +47,12 @@ public class Category implements Serializable {
     }
 
     @ManyToOne
-    @ForeignKey(name = "CATEGORY_PARENT_CATEGORY_FK")
-    @Column(name = "PARENT_CATEGORY_ID")
-    public Category getParentCategory() {
+    @JoinColumn(name = "PARENT_CATEGORY_ID", referencedColumnName = "CATEGORY_ID")
+    public DBCategory getParentCategory() {
         return parentCategory_;
     }
 
-    public void setParentCategory(Category parentCategory) {
+    public void setParentCategory(DBCategory parentCategory) {
         parentCategory_ = parentCategory;
     }
 }
