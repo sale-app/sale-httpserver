@@ -1,6 +1,6 @@
-package com.sale.service;
+package com.sale.controller;
 
-import com.sale.db.objects.DBMall;
+import com.sale.vo.MallVO;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
@@ -20,9 +20,9 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 @Path("/getmalls")
-public class MallService extends AbstractService
+public class MallController extends AbstractController
 {
-    private static Logger logger = LoggerFactory.getLogger(MallService.class.getCanonicalName());
+    private static Logger logger = LoggerFactory.getLogger(MallController.class.getCanonicalName());
 
     @GET
     @Produces("application/json")
@@ -30,12 +30,20 @@ public class MallService extends AbstractService
 
         logger.debug("Fetching malls in cityId [ " + cityId + "], areaId [" + areaId + "]");
 
-        List<DBMall> mallList = getDbManager().getMallsInCityArea(cityId, areaId);
+        List<MallVO> mallList = getMainService().getMallsInCityArea(cityId, areaId);
         JSONObject object = new JSONObject();
         JSONArray array = new JSONArray();
+        if(mallList.size() > 0)
+        {
+            JSONObject obj = new JSONObject();
+            obj.put("mallId", -1);
+            obj.put("mallName", "All Stores");
+            array.add(obj);
+        }
+
         for(int i=0;i<mallList.size();i++)
         {
-            DBMall mall = mallList.get(i);
+            MallVO mall = mallList.get(i);
             JSONObject obj = new JSONObject();
             obj.put("mallId", mall.getMallId());
             obj.put("mallName", mall.getMallName());

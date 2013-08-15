@@ -1,9 +1,7 @@
-package com.sale.service;
+package com.sale.controller;
 
 
-import com.sale.db.DBManager;
-import com.sale.db.DBManagerFactory;
-import com.sale.db.objects.DBCity;
+import com.sale.vo.CityVO;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
@@ -11,7 +9,6 @@ import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import java.util.List;
 
@@ -23,9 +20,9 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 @Path("/citylist")
-public class CityService extends AbstractService
+public class CityController extends AbstractController
 {
-    private static Logger logger = LoggerFactory.getLogger(SaleService.class.getCanonicalName());
+    private static Logger logger = LoggerFactory.getLogger(CityController.class.getCanonicalName());
 
     @GET
     @Produces("application/json")
@@ -33,12 +30,12 @@ public class CityService extends AbstractService
 
         logger.debug("Fetching all cities");
 
-        List<DBCity> cities = getDbManager().getAllCities();
+        List<CityVO> cities = getMainService().getAllCities();
         JSONObject object = new JSONObject();
         JSONArray array = new JSONArray();
         for(int i=0;i<cities.size();i++)
         {
-            DBCity city = cities.get(i);
+            CityVO city = cities.get(i);
             JSONObject obj = new JSONObject();
             obj.put("cityId", city.getCityId());
             obj.put("cityName", city.getCityName());
